@@ -1,6 +1,7 @@
 import React from 'react'
 import {data} from '../data'
 import Navbar from './Navbar'
+import MovieCard from './MovieCard'
 
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
         </div>
         <div className='list'>
           {data.map(movie => {
-            <MovieCard movie={movie} />
+            return <MovieCard movie={movie} />
           })}
         </div>
       </div>

@@ -1,8 +1,9 @@
-export default function movies(state =  [2] , action){
+export default function movies(state =  [] , action){
 
     if(action.type === "ADD_MOVIES"){
         return action.movies;
     }
+    console.log("heya");
     return state;
 
 }

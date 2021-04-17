@@ -6,12 +6,14 @@ import MovieCard from './MovieCard'
 
 class  App extends React.Component {
 
+
   componentDidMount(){
+    // console.log("CDM");
     //make api call
     //dispatch action
      const { store } = this.props;
      store.subscribe(()=>{
-       console.log("UPdate");
+      //  console.log("UPdate");
       //  movies = store.getState();
       this.forceUpdate();
      })
@@ -21,10 +23,7 @@ class  App extends React.Component {
               type : "ADD_MOVIES" , 
               movies : data
     })
-
-    
-
-    console.log(store.getState() , "STATE\n");
+    // console.log(store.getState() , "STATE");
   }
  
   
@@ -32,7 +31,7 @@ class  App extends React.Component {
   render() {
 
     const movies = this.props.store.getState();
-    console.log("Render");
+    // console.log("Render");
 
       return (
         <div className="App">

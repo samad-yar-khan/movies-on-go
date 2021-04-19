@@ -1,5 +1,5 @@
 
-import {ADD_MOVIES} from '../actions/index' //variables for action types 
+import {ADD_MOVIES ,  ADD_FAVOURITES} from '../actions/index' //variables for action types 
 
 //initial state was an arra but we need to serparte the normal movie lista from the fav ones
 //so it was better to make our state be an object with 2 arrays
@@ -14,13 +14,31 @@ export default function movies(state = initialMovieState , action){
     //---
     //string comparisons take more time compares to var comparisons and variables can be cchanges
     //this gives us the adbility to changes name for action typpes
-    if(action.type === ADD_MOVIES){
-        return {
-            ...state ,
-            list : action.movies
-        };//new state
+    // if(action.type === ADD_MOVIES){
+    //     return {
+    //         ...state ,
+    //         list : action.movies
+    //     };//new state
+    // }
+    // // console.log("heya");
+    // return state;
+
+    //instead of if else we use switch case
+    switch(action.type){
+        case ADD_MOVIES :
+            return {
+                ... state ,
+                list : action.movies
+            }
+        case ADD_FAVOURITES  :
+            return {
+                ...state,
+                favourites : [action.movie , ...state.favourites]
+            }
+        
+        default : 
+            return state
+            
     }
-    // console.log("heya");
-    return state;
 
 }

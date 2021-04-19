@@ -4,6 +4,8 @@ import React from 'react'
 
 class MovieCard extends React.Component{
 
+    
+
     render(){
 
         const {movie} = this.props;
@@ -23,7 +25,7 @@ class MovieCard extends React.Component{
                     <div className="rating">
                         {movie.imdbRating}
                     </div>
-                    <button className="favourite-btn">
+                    <button className="favourite-btn" >
                         Favourite
                     </button>
                 </div>

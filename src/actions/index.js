@@ -8,7 +8,8 @@
 //we store our types as variables soe theyc an be used and changed throughout the app 
 //variable comparisons store time in reducers
 export const ADD_MOVIES = "ADD_MOVIES";
-export const ADD_FAVOURITES = "ADD_FAVOURITES";
+export const ADD_TO_FAVOURITES = "ADD_TO_FAVOURITES";
+export const REMOVE_FROM_FAVOURITES = "REMOVE_FROM_FAVOURITES";
 
 //Action creators
 
@@ -21,9 +22,16 @@ export function  addMovies(data){
     }
 }
 
-export function  addFavourites(data){
+export function  addToFavourites(movie){
     return {
-        type : ADD_FAVOURITES ,
-        movie : data
+        type : ADD_TO_FAVOURITES ,
+        movie : movie
+    }
+}
+
+export function  removeFromFavourites(movie){
+    return {
+        type : REMOVE_FROM_FAVOURITES ,
+        movie : movie
     }
 }

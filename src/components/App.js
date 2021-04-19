@@ -15,21 +15,36 @@ class  App extends React.Component {
     //dispatch action
      const { store } = this.props;
      store.subscribe(()=>{
-      //  console.log("UPdate");
-      //  movies = store.getState();
+       console.log(store.getState());
       this.forceUpdate();
      })
 
     store.dispatch(addMovies(data));
     // console.log(store.getState() , "STATE");
   }
+
+  
+  isMovieFavourite = (movie)=> {
+    const {favourites} = this.props.store.getState();
+    
+    let index = favourites.indexOf(movie);
+    // console.log(index);
+
+    if(index !== -1){
+     
+      return true;
+    }else{
+      return false;
+    }
+  }
+
  
   
 
   render() {
 
     const {list} = this.props.store.getState();
-    // console.log("Render");
+    console.log("Render");
 
       return (
         <div className="App">
@@ -44,6 +59,8 @@ class  App extends React.Component {
                 return <MovieCard 
                           movie={movie}
                           key={`movies-${index}`}
+                          dispatch = {this.props.store.dispatch}
+                          isFavourite = {this.isMovieFavourite(movie)}
                         />
               })}
             </div>

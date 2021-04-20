@@ -1,11 +1,12 @@
 
-import {ADD_MOVIES ,  ADD_TO_FAVOURITES , REMOVE_FROM_FAVOURITES} from '../actions/index' //variables for action types 
+import {ADD_MOVIES ,  ADD_TO_FAVOURITES , REMOVE_FROM_FAVOURITES , SET_SHOW_FAVOURITES} from '../actions/index' //variables for action types 
 
 //initial state was an arra but we need to serparte the normal movie lista from the fav ones
 //so it was better to make our state be an object with 2 arrays
 const initialMovieState = {
     list : [],
-    favourites : []
+    favourites : [],
+    showFavourites : false
 }
 
 export default function movies(state = initialMovieState , action){
@@ -46,6 +47,11 @@ export default function movies(state = initialMovieState , action){
                 favourites : filteredArray
             }
         
+        case SET_SHOW_FAVOURITES :
+            return {
+                ...state,
+                showFavourites : action.value
+            }
         default : 
             return state
             

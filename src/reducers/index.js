@@ -1,5 +1,9 @@
 
-import {ADD_MOVIES ,  ADD_TO_FAVOURITES , REMOVE_FROM_FAVOURITES , SET_SHOW_FAVOURITES} from '../actions/index' //variables for action types 
+import {ADD_MOVIES , 
+        ADD_TO_FAVOURITES , 
+        REMOVE_FROM_FAVOURITES , 
+        SET_SHOW_FAVOURITES
+    } from '../actions/index' //variables for action types 
 
 //initial state was an arra but we need to serparte the normal movie lista from the fav ones
 //so it was better to make our state be an object with 2 arrays
@@ -9,7 +13,7 @@ const initialMovieState = {
     showFavourites : false
 }
 
-export default function movies(state = initialMovieState , action){
+export function movies(state = initialMovieState , action){
     //reducers  are passed to the action at the time f creation and hence the last return statemets sets the initial state of the store
     //afte that thhe coscetive states are set by dipattching the actions 
     //---
@@ -55,6 +59,34 @@ export default function movies(state = initialMovieState , action){
         default : 
             return state
             
+    }
+
+}
+
+const initialSearchState = {
+    result : {}
+}
+
+export function search ( state = initialSearchState , action){
+
+    return state;
+
+}
+
+//this will manage both the movies and search states
+const initialRootState = {
+
+    movies : initialMovieState,
+    search : initialSearchState
+
+}
+
+
+export default function rootReducer (state = initialRootState , action){
+
+    return {
+        movies : movies(state.movies ,action),
+        search : search(state.search , action)
     }
 
 }

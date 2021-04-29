@@ -1,3 +1,4 @@
+import { combineReducers } from 'redux'
 
 import {ADD_MOVIES , 
         ADD_TO_FAVOURITES , 
@@ -74,19 +75,24 @@ export function search ( state = initialSearchState , action){
 }
 
 //this will manage both the movies and search states
-const initialRootState = {
+// const initialRootState = {
 
-    movies : initialMovieState,
-    search : initialSearchState
+//     movies : initialMovieState,
+//     search : initialSearchState
 
-}
+// }
 
 
-export default function rootReducer (state = initialRootState , action){
+// export default function rootReducer (state = initialRootState , action){
 
-    return {
-        movies : movies(state.movies ,action),
-        search : search(state.search , action)
-    }
+//     return {
+//         movies : movies(state.movies ,action),
+//         search : search(state.search , action)
+//     }
 
-}
+// }
+//this will give us the same result as above code , it will make the root reducer initial state on its own on its own 
+export default combineReducers({
+    movies : movies ,//for movies we dirctly call mmoveis reducer 
+    search : search//for search state object we caal serach reuducer
+})

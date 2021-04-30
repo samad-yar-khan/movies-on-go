@@ -5,6 +5,7 @@ import { createStore , applyMiddleware} from 'redux'
 import './index.css';
 import App from './components/App';
 import rootReducer from './reducers'
+import thunk from 'redux-thunk'
 
 //MiddleWare
 //funct logger(obj,next,action)
@@ -23,13 +24,14 @@ import rootReducer from './reducers'
 //modified middleware
 //if fucntion are juts of oe line we make the implicit
 
-const thunk = ({dispatch , getState}) => (next) => (action) => {
-  if(typeof action === 'function'){
-    action(dispatch) ;
-    return;
-  }
-  next(action);
-}
+//custom thun middle ware , thhe inbuilt middleare works the same way
+// const thunk = ({dispatch , getState}) => (next) => (action) => {
+//   if(typeof action === 'function'){
+//     action(dispatch) ;
+//     return;
+//   }
+//   next(action);
+// }
 
 
 const logger = ({dispatch , getState}) => (next) => (action) =>{

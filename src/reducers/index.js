@@ -3,7 +3,9 @@ import { combineReducers } from 'redux'
 import {ADD_MOVIES , 
         ADD_TO_FAVOURITES , 
         REMOVE_FROM_FAVOURITES , 
-        SET_SHOW_FAVOURITES
+        SET_SHOW_FAVOURITES,
+        ADD_SEARCH_RESULT,
+        ADD_TO_MOVIES_LIST
     } from '../actions/index' //variables for action types 
 
 //initial state was an arra but we need to serparte the normal movie lista from the fav ones
@@ -56,6 +58,17 @@ export function movies(state = initialMovieState , action){
             return {
                 ...state,
                 showFavourites : action.value
+            } 
+        case ADD_TO_MOVIES_LIST : 
+            
+            state.list.forEach(movie => {
+                if(movie.Title === action.movie.Title){
+                    return state;
+                }
+                });
+            return{
+                ...state,
+                list : [action.movie , ...state.list]
             }
         default : 
             return state
@@ -65,13 +78,28 @@ export function movies(state = initialMovieState , action){
 }
 
 const initialSearchState = {
-    result : {}
+    result : {},
+    showSearchResults : false
 }
 
 export function search ( state = initialSearchState , action){
 
-    return state;
+    switch(action.type){
+        case ADD_SEARCH_RESULT :
+            return {
+                ...state,
+                result : action.movie,
+                showSearchResults : true
+            }
+        case ADD_TO_MOVIES_LIST : 
+            return{
+                ...state,
+               showSearchResults :false
+            }
+        default :
+            return state 
 
+    }
 }
 
 //this will manage both the movies and search states

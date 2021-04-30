@@ -9,16 +9,38 @@ import rootReducer from './reducers'
 //MiddleWare
 //funct logger(obj,next,action)
 //func logger(obj)(next)(action)
-const logger = function({dispatch , getState}){
-  return function(next){
-    return function(action){
-      console.log("ACTION : ", action);
-      next(action)
 
-    }
+// const logger = function({dispatch , getState}){
+//   return function(next){
+//     return function(action){
+//       console.log("ACTION : ", action);
+//       next(action)
+
+//     }
+//   }
+// }
+
+//modified middleware
+//if fucntion are juts of oe line we make the implicit
+
+const thunk = ({dispatch , getState}) => (next) => (action) => {
+  if(typeof action === 'function'){
+    action(dispatch) ;
+    return;
   }
+  next(action);
 }
-const store = createStore(rootReducer, applyMiddleware(logger));//create store takes reucer as arguments
+
+
+const logger = ({dispatch , getState}) => (next) => (action) =>{
+  if(typeof action != 'function'){
+    console.log("ACTION : " , action);
+  }
+  // console.log("ACTION : " , action);
+  next(action);
+}
+
+const store = createStore(rootReducer , applyMiddleware(logger , thunk));//create store takes reucer as arguments
 // console.log(store.getState());
 
 // store.dispatch({

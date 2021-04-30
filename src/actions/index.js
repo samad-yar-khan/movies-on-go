@@ -44,3 +44,21 @@ export function  setShowFavourites(value){
     }
 }
 
+//we are basically caling a function inside our action because we need to fetch our data from the api 
+//and call reducer here aswell , for using the reducer here and dealing with actions returning fucntions 
+//we use a middleware called thunk
+export function handleMovieSearch(title){
+    const url = `http://www.omdbapi.com/?apikey=9ff539eb&t=${title}`;
+
+    return function(reducer){
+        fetch(url)
+        .then( Response =>Response.json())
+        .then (movie => {
+            console.log(movie);
+        })
+    }
+
+    
+}
+
+

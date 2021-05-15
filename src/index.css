@@ -79,7 +79,7 @@ body {
   cursor: pointer;
 }
 #search-btn {
-  background: #f2711c;
+  background: #0b6bfc;
   height: 43px;
   color: #fff;
   border: none;
@@ -171,11 +171,11 @@ body {
   font-weight: 600;
 }
 .favourite-btn {
-  background-color: #2185d0;
+  background-color: #61bafd;
   color: #fff;
 }
 .unfavourite-btn {
-  background-color: #db2828;
+  background-color: #df6363;
   color: #fff;
   text-shadow: none;
 }

@@ -11,7 +11,6 @@ class  App extends React.Component {
 
 
   componentDidMount(){
-    // console.log("CDM");
     //make api call
     //dispatch action
      const { store } = this.props;

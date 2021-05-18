@@ -39,7 +39,7 @@ const logger = ({dispatch , getState}) => (next) => (action) =>{
     console.log("ACTION : " , action);
   }
   // console.log("ACTION : " , action);
-  next(action);
+  next(action);//this is similiar to calling action as argumnet fr our next middleware or dispatch
 }
 
 const store = createStore(rootReducer , applyMiddleware(logger , thunk));//create store takes reucer as arguments

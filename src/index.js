@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {createContext} from 'react';
 import ReactDOM from 'react-dom';
 import { createStore , applyMiddleware} from 'redux' 
 
@@ -55,11 +55,15 @@ const store = createStore(rootReducer , applyMiddleware(logger , thunk));//creat
 // })
 
 // console.log(store.getState());
+export const StoreContext = createContext();
+console.log('storeContext' , StoreContext);
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <App store={store}/>
+    <StoreContext.Provider value={store}> {/** we are passingg thi value as store but can be any object*/}
+      <App store={store}/>
+    </StoreContext.Provider>      
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -68,7 +68,7 @@ export function handleMovieSearch(title){
 
 export function addMovieSearchResult(movie){
     return {
-        type : 'ADD_SEARCH_RESULT',
+        type : ADD_SEARCH_RESULT,
         movie: movie
     }
 }

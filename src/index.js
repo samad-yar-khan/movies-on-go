@@ -58,12 +58,39 @@ const store = createStore(rootReducer , applyMiddleware(logger , thunk));//creat
 export const StoreContext = createContext();
 console.log('storeContext' , StoreContext);
 
+//This is how we wrapped our app around StoreContext.Provider initially
+
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <StoreContext.Provider value={store}> {/** we are passingg thi value as store but can be any object*/}
+//       <App store={store}/>
+//     </StoreContext.Provider>      
+//   </React.StrictMode>,
+//   document.getElementById('root')
+// );
+
+//but to be able to have more flexibility we make our own classs
+ class Provider extends React.Component{
+
+    render()
+    {
+      const {store} = this.props; //store is passed as props
+
+      return(
+        <StoreContext.Provider value={store} >
+          {this.props.children} {/*this was written here just soo that any compnents wraapped around our provder can also be rendered*/}
+        </StoreContext.Provider>
+      );
+    
+    }
+
+ }
 
 ReactDOM.render(
   <React.StrictMode>
-    <StoreContext.Provider value={store}> {/** we are passingg thi value as store but can be any object*/}
+    <Provider store={store}>
       <App store={store}/>
-    </StoreContext.Provider>      
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

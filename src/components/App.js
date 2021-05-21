@@ -57,14 +57,9 @@ class  App extends React.Component {
     console.log(this.props.store.getState());
 
       return(
-        <StoreContext.Consumer>
-
-          {
-            (store)=>{//callback func nessessary to get store from provider //this store is the object which we passed to provider and we are getting it back forom consumer
-              return (
+ 
                 <div className="App">
                   <Navbar
-                      dispatch = {store.dispatch}
                       search = {search}
                         />
                   <div className="main">
@@ -87,15 +82,27 @@ class  App extends React.Component {
                   </div>
                 </div>
              );
-            }
-          }
-
-        
-        </StoreContext.Consumer>
-      )
+          
 
   
       }
 }
 
-export default App;
+
+// *We are making thus arapper class because or app class needs store as a prop so it can be used in all methods*/
+
+
+class AppWrapper extends React.Component{
+
+  render(){
+
+    return(
+      <StoreContext.Consumer>
+        {store => <App store={store} />}
+      </StoreContext.Consumer>
+    )
+
+  }
+}
+
+export default AppWrapper;

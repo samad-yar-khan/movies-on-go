@@ -52,7 +52,7 @@ class  App extends React.Component {
 
   render() {
 
-    const {movies , search} = this.props; // {movie:[] , search:{}}
+    const {movies} = this.props; // {movie:[] , search:{}}
     const {list , favourites , showFavourites} = movies;
     const displayMovies = showFavourites?favourites:list;
     // console.log(this.props.store.getState());
@@ -60,9 +60,7 @@ class  App extends React.Component {
       return(
  
                 <div className="App">
-                  <Navbar
-                      search = {search}
-                        />
+                  <Navbar />
                   <div className="main">
                     <div className="tabs">
                       <div className={`tab ${showFavourites ? '' : 'active-tabs'}`} onClick={()=> this.OnTabChange(false)}>Movies</div>

@@ -5,7 +5,7 @@ import MovieCard from './MovieCard'
 
 import {addMovies  , setShowFavourites} from '../actions/index'
 
-import {StoreContext} from '../index' 
+import {connect} from '../index' 
 //inside the context properrt of our StoreContext we have a consumer property using whcih we we can acess the store property passed to our provider
 //we caan only use Cosumer method inside render 
 
@@ -17,19 +17,20 @@ class  App extends React.Component {
   componentDidMount(){
     //make api call
     //dispatch action
-     const { store } = this.props;
-     store.subscribe(()=>{
-       console.log(store.getState());
-      this.forceUpdate();
-     })
+    //no need fr this as we have now substibed to store in our connctedComponent 
+    //  const { store } = this.props;
+    //  store.subscribe(()=>{
+    //    console.log(store.getState());
+    //   this.forceUpdate();
+    //  })
 
-    store.dispatch(addMovies(data));
+    this.props.dispatch(addMovies(data));
     // console.log(store.getState() , "STATE");
   }
 
   
   isMovieFavourite = (movie)=> {
-    const {movies } = this.props.store.getState();
+    const {movies } = this.props;
     const {favourites} = movies;
     
     let index = favourites.indexOf(movie);
@@ -44,17 +45,17 @@ class  App extends React.Component {
   }
 
   OnTabChange(val){
-    const { store } = this.props;
-    store.dispatch(setShowFavourites(val));
+    
+    this.props.dispatch(setShowFavourites(val));
   }
   
 
   render() {
 
-    const {movies , search} = this.props.store.getState(); // {movie:[] , search:{}}
+    const {movies , search} = this.props; // {movie:[] , search:{}}
     const {list , favourites , showFavourites} = movies;
     const displayMovies = showFavourites?favourites:list;
-    console.log(this.props.store.getState());
+    // console.log(this.props.store.getState());
 
       return(
  
@@ -72,7 +73,7 @@ class  App extends React.Component {
                         return <MovieCard 
                                   movie={movie}
                                   key={`movies-${index}`}
-                                  dispatch = {this.props.store.dispatch}
+                                  dispatch = {this.props}
                                   isFavourite = {this.isMovieFavourite(movie)}
                                 />
                       })}
@@ -92,17 +93,27 @@ class  App extends React.Component {
 // *We are making thus arapper class because or app class needs store as a prop so it can be used in all methods*/
 
 
-class AppWrapper extends React.Component{
+// class AppWrapper extends React.Component{
 
-  render(){
+//   render(){
 
-    return(
-      <StoreContext.Consumer>
-        {store => <App store={store} />}
-      </StoreContext.Consumer>
-    )
+//     return(
+//       <StoreContext.Consumer>
+//         {store => <App store={store} />}
+//       </StoreContext.Consumer>
+//     )
 
-  }
+//   }
+// }
+
+//this function tells whats propertues we need from state for our component 
+function mapStateToProps(state){
+  return{
+    movies:state.movies,
+    search:state.search
+  };
 }
 
-export default AppWrapper;
+const ConnectedAppComponennt = connect(mapStateToProps)(App);
+
+export default ConnectedAppComponennt;

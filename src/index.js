@@ -1,6 +1,6 @@
 import React , {createContext} from 'react';
 import ReactDOM from 'react-dom';
-import { createStore , applyMiddleware} from 'redux' 
+import { createStore , applyMiddleware } from 'redux' 
 
 import './index.css';
 import App from './components/App';
@@ -85,6 +85,56 @@ console.log('storeContext' , StoreContext);
     }
 
  }
+
+
+
+//const connectedComp  = connect(callback)(Component);
+export  function connect(callback) {
+  
+  return function(Component){
+    
+    class ConnectedComponent extends React.Component{
+
+      constructor(props){
+        super(props);
+        this.unsubscribe = this.props.store.subscribe(()=>{this.forceUpdate()});//we use this to unsubstribe to store at destrctotr too avoid memory leaks
+      }
+
+      componentWillUnmount(){
+        this.unsubscribe();
+      }
+
+      render(){
+        const {store} = this.props;
+        const state =  store.getState();
+        const dataToBePassedAsProps = callback(state);
+        return <Component  
+                  {...dataToBePassedAsProps}
+                  dispatch = {store.dispatch}
+                />
+      }
+    }
+
+    //we need this wrapper because we hace to us store in the contrutotr of connectedComponent
+    class ConnectedComponentWrapper extends React.Component{
+      render(){ 
+        return(
+          <StoreContext.Consumer>
+          {
+            (store)=>{
+              return(
+                <ConnectedComponent store={store} />
+              )
+            }
+          }
+        </StoreContext.Consumer>
+        )
+      }
+    }
+
+    return ConnectedComponentWrapper;
+  }
+}
 
 ReactDOM.render(
   <React.StrictMode>

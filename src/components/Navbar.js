@@ -1,5 +1,5 @@
 import React from 'react'
-import { connect } from '../index';
+import {connect} from 'react-redux' 
 import {handleMovieSearch , addToMovieList} from '../actions/index'
  
 

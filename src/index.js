@@ -1,7 +1,7 @@
-import React , {createContext} from 'react';
+import React  from 'react';
 import ReactDOM from 'react-dom';
 import { createStore , applyMiddleware } from 'redux' 
-
+import {Provider} from 'react-redux'
 import './index.css';
 import App from './components/App';
 import rootReducer from './reducers'
@@ -55,8 +55,8 @@ const store = createStore(rootReducer , applyMiddleware(logger , thunk));//creat
 // })
 
 // console.log(store.getState());
-export const StoreContext = createContext();
-console.log('storeContext' , StoreContext);
+// export const StoreContext = createContext();
+// console.log('storeContext' , StoreContext);
 
 //This is how we wrapped our app around StoreContext.Provider initially
 
@@ -69,72 +69,78 @@ console.log('storeContext' , StoreContext);
 //   document.getElementById('root')
 // );
 
+//***************PROVIDER*****************
+
 //but to be able to have more flexibility we make our own classs
- class Provider extends React.Component{
+//now we are using our inbuilt Provider from react-redux ,its written the same way and works the same way aswell
 
-    render()
-    {
-      const {store} = this.props; //store is passed as props
+//  class Provider extends React.Component{
 
-      return(
-        <StoreContext.Provider value={store} >
-          {this.props.children} {/*this was written here just soo that any compnents wraapped around our provder can also be rendered*/}
-        </StoreContext.Provider>
-      );
+//     render()
+//     {
+//       const {store} = this.props; //store is passed as props
+
+//       return(
+//         <StoreContext.Provider value={store} >
+//           {this.props.children} {/*this was written here just soo that any compnents wraapped around our provder can also be rendered*/}
+//         </StoreContext.Provider>
+//       );
     
-    }
+//     }
 
- }
+//  }
 
 
+//*********************CONNECT***************
 
 //const connectedComp  = connect(callback)(Component);
-export  function connect(callback) {
+//no we arre using the inbuilt connect funtion but it works the same waya as the one we have written below
+// export  function connect(callback) {
   
-  return function(Component){
+//   return function(Component){
     
-    class ConnectedComponent extends React.Component{
+//     class ConnectedComponent extends React.Component{
 
-      constructor(props){
-        super(props);
-        this.unsubscribe = this.props.store.subscribe(()=>{this.forceUpdate()});//we use this to unsubstribe to store at destrctotr too avoid memory leaks
-      }
+//       constructor(props){
+//         super(props);
+//         this.unsubscribe = this.props.store.subscribe(()=>{this.forceUpdate()});//we use this to unsubstribe to store at destrctotr too avoid memory leaks
+//       }
 
-      componentWillUnmount(){
-        this.unsubscribe();
-      }
+//       componentWillUnmount(){
+//         this.unsubscribe();
+//       }
 
-      render(){
-        const {store} = this.props;
-        const state =  store.getState();
-        const dataToBePassedAsProps = callback(state);
-        return <Component  
-                  {...dataToBePassedAsProps}
-                  dispatch = {store.dispatch}
-                />
-      }
-    }
+//       render(){
+//         const {store} = this.props;
+//         const state =  store.getState();
+//         const dataToBePassedAsProps = callback(state);
+//         return <Component  
+//                   {...dataToBePassedAsProps}
+//                   dispatch = {store.dispatch}
+//                 />
+//       }
+//     }
 
-    //we need this wrapper because we hace to us store in the contrutotr of connectedComponent
-    class ConnectedComponentWrapper extends React.Component{
-      render(){ 
-        return(
-          <StoreContext.Consumer>
-          {
-            (store)=>{
-              return(
-                <ConnectedComponent store={store} />
-              )
-            }
-          }
-        </StoreContext.Consumer>
-        )
-      }
-    }
+//     //we need this wrapper because we hace to us store in the contrutotr of connectedComponent
+//     class ConnectedComponentWrapper extends React.Component{
+//       render(){ 
+//         return(
+//           <StoreContext.Consumer>
+//           {
+//             (store)=>{
+//               return(
+//                 <ConnectedComponent store={store} />
+//               )
+//             }
+//           }
+//         </StoreContext.Consumer>
+//         )
+//       }
+//     }
 
-    return ConnectedComponentWrapper;
-  }
-}
+//     return ConnectedComponentWrapper;
+//   }
+// }
 
 ReactDOM.render(
   <React.StrictMode>

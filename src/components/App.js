@@ -5,7 +5,7 @@ import MovieCard from './MovieCard'
 
 import {addMovies  , setShowFavourites} from '../actions/index'
 
-import {connect} from '../index' 
+import {connect} from 'react-redux' 
 //inside the context properrt of our StoreContext we have a consumer property using whcih we we can acess the store property passed to our provider
 //we caan only use Cosumer method inside render 
 
@@ -71,7 +71,7 @@ class  App extends React.Component {
                         return <MovieCard 
                                   movie={movie}
                                   key={`movies-${index}`}
-                                  dispatch = {this.props}
+                                  dispatch = {this.props.dispatch}
                                   isFavourite = {this.isMovieFavourite(movie)}
                                 />
                       })}
